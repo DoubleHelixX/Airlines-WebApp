@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class page3 : System.Web.UI.Page
+{
+    string time, date, trip="";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Label3.Text = "NOTICE: Arrival Date Usually takes 12 days";
+        
+    }
+
+    protected void btnLogin_Click(object sender, EventArgs e)
+    {
+       
+        time = TextBox1.Text;
+        date = TextBox2.Text;
+        Session["time"] = time;
+        Session["date"] = date;
+        if ((rt.Checked == false && ow.Checked == false) || (TextBox1.Text.Length < 1 || TextBox2.Text.Length < 1))
+        {
+            if (rt.Checked == false && ow.Checked == false)
+                Label4.Text = "Please Select Round Trip or One Way as an Option";
+
+            if (rt.Checked == true || ow.Checked == true)
+            {
+                if (trip.Contains("Round"))
+                    rt.Checked = true;
+                else if (trip.Contains("One"))
+                    ow.Checked = true;
+                Label4.Text = "";
+            }
+           
+            
+
+            if (TextBox1.Text.Length < 1 || TextBox2.Text.Length < 1)
+            {
+                TextBox2.Text = TextBox2.Text;
+                TextBox1.Text = TextBox1.Text;
+                Label5.Text = "PLEASE FILL OUT BOTH TEXTBOX FIELDS ";
+            }
+        }
+        else
+            Response.Redirect("page4.aspx");
+    }
+
+    protected void rt_CheckedChanged(object sender, EventArgs e)
+    {
+        trip = rt.Text;
+        rt.Checked = true;
+        Session["trip"] = trip;
+    }
+
+    protected void ow_CheckedChanged(object sender, EventArgs e)
+    {
+        ow.Checked = true;
+        trip = ow.Text;
+        Session["trip"] = trip;
+    }
+
+    protected void TextBox2_TextChanged(object sender, EventArgs e)
+    {
+        TextBox2.Text = TextBox2.Text;
+        TextBox2.ForeColor = Color.White;
+        //  Label3.Text = "NOTICE: Arrival Date Usually takes 12 days";
+        //Label3.Visible = true;
+    }
+
+    protected void TextBox1_TextChanged(object sender, EventArgs e)
+    {
+        TextBox1.Text = TextBox1.Text;
+        TextBox1.ForeColor = Color.White;
+    }
+}
